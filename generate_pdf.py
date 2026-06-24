@@ -79,6 +79,11 @@ pdf.write(6, "Focus Group: ")
 pdf.set_font('Times', '', 12)
 pdf.write(6, "Image Authentication & Explainable AI Team\n")
 
+# Place "by HARSHAD R" at the bottom right of the cover page
+pdf.set_y(240)
+pdf.set_font('Times', 'B', 14)
+pdf.cell(0, 6, "by HARSHAD R", align='R')
+
 # Start Chapter 1 on a new page (Page 2)
 pdf.add_page()
 pdf.set_text_color(0, 0, 0)
