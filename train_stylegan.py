@@ -59,6 +59,18 @@ def build_robust_model():
     return model
 
 def main():
+    # Setup GPU Memory Growth
+    gpus = tf.config.list_physical_devices('GPU')
+    if gpus:
+        try:
+            for gpu in gpus:
+                tf.config.experimental.set_memory_growth(gpu, True)
+            print(f"✅ Found {len(gpus)} GPU(s). Memory growth enabled.")
+        except RuntimeError as e:
+            print(e)
+    else:
+        print("⚠️ No GPU detected by TensorFlow.")
+
     if not os.path.exists(TRAIN_DIR) or not os.path.exists(VALID_DIR):
         print(f"ERROR: Dataset paths '{TRAIN_DIR}' or '{VALID_DIR}' not found.")
         print("Please ensure the StyleGAN dataset is extracted correctly.")
