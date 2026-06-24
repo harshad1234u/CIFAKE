@@ -44,34 +44,34 @@ for line in lines:
         # Chapter Headings: Times New Roman, 16, Bold, Uppercase
         pdf.set_font('Times', 'B', 16)
         text = line.replace('# ', '').upper()
-        pdf.multi_cell(0, H_16, text, align='L')
+        pdf.multi_cell(w=pdf.epw, h=H_16, text=text, align='L')
         pdf.ln(2)
         
     elif line.startswith('**') and line.endswith('**'):
         # Section Headings: Times New Roman, 14, Bold
         pdf.set_font('Times', 'B', 14)
         text = line.replace('**', '')
-        pdf.multi_cell(0, H_14, text, align='L')
+        pdf.multi_cell(w=pdf.epw, h=H_14, text=text, align='L')
         pdf.ln(2)
         
     elif line.startswith('Table ') or line.startswith('Figure '):
         # Captions
         pdf.set_font('Times', 'I', 12)
-        pdf.multi_cell(0, H_12, line, align='C')
+        pdf.multi_cell(w=pdf.epw, h=H_12, text=line, align='C')
         
     elif line.startswith('* '):
         # Bullet points: Times New Roman, 12, Justified, 1.5 Spacing
         pdf.set_font('Times', '', 12)
         text = line.replace('* ', '- ')
         text = text.replace('**', '')
-        pdf.multi_cell(0, H_12, text, align='J')
+        pdf.multi_cell(w=pdf.epw, h=H_12, text=text, align='J')
         
     else:
         # Body Text / Numbered Lists: Times New Roman, 12, Justified, 1.5 Spacing
         pdf.set_font('Times', '', 12)
         # Remove any stray bold asterisks from the text
         text = line.replace('**', '')
-        pdf.multi_cell(0, H_12, text, align='J')
+        pdf.multi_cell(w=pdf.epw, h=H_12, text=text, align='J')
 
 pdf.output('docs/Project_Report.pdf')
 print("PDF strictly formatted and generated successfully.")
