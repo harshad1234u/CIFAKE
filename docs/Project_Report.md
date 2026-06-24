@@ -95,6 +95,8 @@ A noticeable gap exists regarding lightweight, web-deployable synthetic image de
 
 **System Architecture Diagram**
 
+![System Architecture Diagram](system_architecture.png)
+
 ```mermaid
 graph TD
     subgraph Frontend [Streamlit User Interface]

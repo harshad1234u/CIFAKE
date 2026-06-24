@@ -126,6 +126,16 @@ for line in lines:
         pdf.multi_cell(w=pdf.epw, h=H_14, text=text, align='L')
         pdf.ln(2)
         
+    elif line.startswith('![') and ']' in line and '(' in line:
+        # Extract the image path
+        img_path = line.split('(')[1].split(')')[0]
+        if not img_path.startswith('docs/') and not os.path.isabs(img_path):
+            img_path = os.path.join('docs', img_path)
+            
+        if os.path.exists(img_path):
+            pdf.image(img_path, w=120, x=(210 - 120) / 2)
+            pdf.ln(5)
+            
     elif line.startswith('Table ') or line.startswith('Figure '):
         # Captions
         pdf.set_font('Times', 'I', 12)
