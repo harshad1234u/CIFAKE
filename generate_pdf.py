@@ -70,7 +70,7 @@ pdf.set_text_color(0, 0, 0)
 pdf.set_font('Times', 'B', 12)
 pdf.write(6, "Cohort: ")
 pdf.set_font('Times', '', 12)
-pdf.write(6, "XTRAGRAD Advanced Cohort - Batch 1\n")
+pdf.write(6, "XTRAGRAD AI Foundational Cohort\n")
 
 pdf.ln(2)
 
