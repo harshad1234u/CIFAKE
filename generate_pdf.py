@@ -31,11 +31,15 @@ H_14 = 7.4
 # 16pt font is ~5.644mm high. 5.644 * 1.5 = 8.46 mm
 H_16 = 8.46
 
+def sanitize(text):
+    return text.replace('\u2013', '-').replace('\u2014', '--').replace('\u2018', "'").replace('\u2019', "'").replace('\u201c', '"').replace('\u201d', '"')
+
 with open('docs/Project_Report.md', 'r', encoding='utf-8') as f:
     lines = f.readlines()
 
 for line in lines:
     line = line.strip()
+    line = sanitize(line)
     if not line:
         pdf.ln(H_12)
         continue
