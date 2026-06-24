@@ -62,6 +62,11 @@ def predict_image(image, model_name="CIFAKE (MobileNetV2)"):
         img_array = np.array(img)
         img_array = np.expand_dims(img_array, axis=0)
         
+        # Apply preprocessing depending on the model type
+        if "CIFAKE" in model_name:
+            from tensorflow.keras.applications.mobilenet_v2 import preprocess_input
+            img_array = preprocess_input(img_array.astype(np.float32))
+        
         prediction = model.predict(img_array, verbose=0)
         probability = float(prediction[0][0])
         
