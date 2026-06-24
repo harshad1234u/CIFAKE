@@ -1,0 +1,54 @@
+/* Professional AI Theme */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+html, body, [class*="css"]  {
+    font-family: 'Inter', sans-serif;
+}
+
+/* Custom Cards */
+.custom-card {
+    background-color: #1E1E1E;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    border: 1px solid #333;
+}
+
+/* Prediction Results */
+.result-real {
+    color: #4CAF50;
+    font-weight: 700;
+    font-size: 24px;
+}
+
+.result-fake {
+    color: #F44336;
+    font-weight: 700;
+    font-size: 24px;
+}
+
+.metric-card {
+    background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+    border-left: 4px solid #007ACC;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.metric-value {
+    font-size: 32px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.metric-label {
+    font-size: 14px;
+    color: #aaa;
+    text-transform: uppercase;
+}
+
+/* Hide Streamlit elements for cleaner UI */
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+header {visibility: hidden;}
