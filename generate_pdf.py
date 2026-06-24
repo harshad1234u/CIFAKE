@@ -32,7 +32,7 @@ pdf.ln(60)
 # Title (Large, Bold, Dark Blue/Gray)
 pdf.set_text_color(20, 50, 80)
 pdf.set_font('Times', 'B', 20)
-title_text = "IMAGE CLASSIFICATION AND EXPLAINABLE IDENTIFICATION OF AI-GENERATED SYNTHETIC IMAGES"
+title_text = "CIFAKE: Image Classification and Explainable Identification of AI-Generated Synthetic Images"
 pdf.multi_cell(w=pdf.epw, h=8, text=title_text, align='C')
 
 pdf.ln(4)
