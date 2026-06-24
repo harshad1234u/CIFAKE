@@ -9,9 +9,11 @@ from tensorflow.keras import layers, models, callbacks
 # Replace this with the path to the extracted Kaggle dataset
 # It assumes a folder structure like:
 # dataset_path/
-# ├── real/
-# └── fake/
-DATASET_PATH = "dataset_stylegan" 
+# ├── train/ (with real/ and fake/ subfolders)
+# ├── valid/ (with real/ and fake/ subfolders)
+# └── test/  (with real/ and fake/ subfolders)
+TRAIN_DIR = "dataset/real_vs_fake/train"
+VALID_DIR = "dataset/real_vs_fake/valid"
 
 IMG_SIZE = (224, 224)
 BATCH_SIZE = 32
@@ -57,28 +59,24 @@ def build_robust_model():
     return model
 
 def main():
-    if not os.path.exists(DATASET_PATH):
-        print(f"ERROR: Dataset path '{DATASET_PATH}' not found.")
-        print("Please download the StyleGAN dataset from Kaggle, extract it, and place 'real' and 'fake' folders inside.")
+    if not os.path.exists(TRAIN_DIR) or not os.path.exists(VALID_DIR):
+        print(f"ERROR: Dataset paths '{TRAIN_DIR}' or '{VALID_DIR}' not found.")
+        print("Please ensure the StyleGAN dataset is extracted correctly.")
         return
 
     print("Loading Dataset...")
     
-    # 80% Training
+    # Training Dataset
     train_dataset = tf.keras.utils.image_dataset_from_directory(
-        DATASET_PATH,
-        validation_split=0.2,
-        subset="training",
+        TRAIN_DIR,
         seed=123,
         image_size=IMG_SIZE,
         batch_size=BATCH_SIZE
     )
 
-    # 20% Validation
+    # Validation Dataset
     val_dataset = tf.keras.utils.image_dataset_from_directory(
-        DATASET_PATH,
-        validation_split=0.2,
-        subset="validation",
+        VALID_DIR,
         seed=123,
         image_size=IMG_SIZE,
         batch_size=BATCH_SIZE
