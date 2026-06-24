@@ -1,45 +1,63 @@
-# CIFAKE: Image Classification and Explainable Identification of AI-Generated Synthetic Images
+# CIFAKE & Deepfake Image Classification: Explainable Identification of AI-Generated Images
 
-![CIFAKE Banner](https://img.shields.io/badge/AI-Image%20Detection-blue)
-![Accuracy](https://img.shields.io/badge/Accuracy-93.32%25-brightgreen)
+![AI Detection](https://img.shields.io/badge/AI-Image%20Detection-blue)
+![CIFAKE Accuracy](https://img.shields.io/badge/CIFAKE%20Accuracy-93.32%25-brightgreen)
+![StyleGAN Accuracy](https://img.shields.io/badge/StyleGAN%20Accuracy-98.18%25-darkgreen)
 ![Framework](https://img.shields.io/badge/TensorFlow-2.11%2B-orange)
 ![Frontend](https://img.shields.io/badge/Streamlit-1.20%2B-red)
 
 ## Overview
-CIFAKE is a complete end-to-end AI application built to detect AI-generated synthetic images. With the rise of advanced generative models, distinguishing reality from AI fiction is increasingly challenging. This project tackles the issue by utilizing a highly optimized Deep Learning model (MobileNetV2) integrated into a modern, professional web interface with built-in Explainable AI (XAI) capabilities.
+This application is a comprehensive, end-to-end AI platform designed to detect synthetic media. As generative models become increasingly sophisticated, verifying the authenticity of digital images is critical. This project addresses this challenge by integrating two specialized deep learning models into an explainable, professional web application with built-in Explainable AI (XAI) capabilities.
 
-## Problem Statement
-Provide a reliable, explainable tool to verify the authenticity of digital images by distinguishing between real photographs and AI-generated content.
+## Dual-Model Architecture
 
-## Dataset
-* **Total Images:** 120,000
-* **Training Set:** 100,000 images
-* **Testing Set:** 20,000 images
-* **Classes:** REAL, FAKE (Balanced 50/50)
+The application dynamically supports two state-of-the-art models tailored for different detection domains:
 
-## Model Architecture
-The core model leverages **MobileNetV2** via Transfer Learning. This architecture was chosen for its excellent balance of high accuracy and fast inference speed, making it suitable for real-time web applications.
+### 1. CIFAKE Detector (MobileNetV2)
+* **Best For:** General objects, animals, vehicles, and standard synthetic artwork.
+* **Architecture:** MobileNetV2 utilizing transfer learning.
+* **Accuracy:** **93.32% validation accuracy** on the CIFAKE dataset.
+* **Dataset:** 120,000 images (100,000 training, 20,000 testing).
+
+### 2. StyleGAN Deepfake Face Detector (EfficientNetV2B0)
+* **Best For:** Photorealistic human faces and deepfake portraits.
+* **Architecture:** EfficientNetV2B0 with a custom dense classification head.
+* **Accuracy:** **98.18% validation accuracy** on NVIDIA's StyleGAN dataset.
+* **Dataset:** 140,000 real and fake faces (70,000 real from FFHQ, 70,000 synthetic from StyleGAN/StyleGAN2).
+
+---
 
 ## Explainable AI (Grad-CAM)
-This project doesn't just provide a prediction; it explains *why*. By integrating Gradient-weighted Class Activation Mapping (Grad-CAM), the application generates a heatmap highlighting the exact regions and textures the model focused on when making its decision. 
+Both models are integrated with an **Explainable AI (XAI)** module using Gradient-weighted Class Activation Mapping (Grad-CAM). Instead of functioning as a "black box," the application overlays a jet-colormap heatmap onto the image, visually highlighting the exact spatial regions, textures, and artifacts (e.g. background warping, edge irregularities) that influenced the model's decision.
 
-## Results
-* **Validation Accuracy:** 93.32%
-* **Validation Loss:** 0.1690
+---
 
-## Installation Guide
-1. Clone this repository.
-2. Ensure you have Python 3.9+ installed.
-3. Install the dependencies:
+## Installation & Setup
+
+1. **Clone the Repository:**
+   ```bash
+   git clone https://github.com/harshad1234u/CIFAKE.git
+   cd CIFAKE
+   ```
+
+2. **Install Dependencies:**
    ```bash
    pip install -r requirements.txt
    ```
-4. Run the Streamlit application:
+
+3. **Download Model Files:**
+   Ensure both model files are placed in the appropriate directory:
+   * `model/cifake_model.keras` (CIFAKE model)
+   * `stylegan_detector_best.keras` or `model/stylegan_detector_best.keras` (StyleGAN model)
+
+4. **Run the Application:**
    ```bash
    streamlit run frontend/app.py
    ```
 
-## Future Scope
-* Support for analyzing specific AI artifacts (e.g., GAN fingerprints).
-* Expanding the dataset to include newer diffusion model outputs.
-* Mobile application integration via a RESTful API backend.
+---
+
+## Model Training
+* To train the general object detector, refer to `train.py`.
+* To train the face deepfake detector using GPU acceleration (e.g., in Google Colab), refer to `train_stylegan.py`. Note that native Windows GPU acceleration requires Python 3.10 and TensorFlow <= 2.10, so running the training pipeline via Google Colab is highly recommended.
+

@@ -37,8 +37,16 @@ def sanitize(text):
 with open('docs/Project_Report.md', 'r', encoding='utf-8') as f:
     lines = f.readlines()
 
+in_code_block = False
 for line in lines:
     line = line.strip()
+    if line.startswith('```'):
+        in_code_block = not in_code_block
+        continue
+        
+    if in_code_block:
+        continue
+        
     line = sanitize(line)
     if not line:
         pdf.ln(H_12)
