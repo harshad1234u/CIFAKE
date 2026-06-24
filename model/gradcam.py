@@ -3,16 +3,20 @@ import tensorflow as tf
 import cv2
 from PIL import Image
 
-def make_gradcam_heatmap(img_array, model, last_conv_layer_name="mobilenetv2_1.00_224", pred_index=None):
+def make_gradcam_heatmap(img_array, model, last_conv_layer_name=None, pred_index=None):
     """
     Generates a Grad-CAM heatmap for the given image array and model.
     """
-    # 1. Create a model that maps the input image to the activations of the last conv layer as well as the output predictions
-    # To avoid graph partitioning errors with nested Functional models,
-    # we can access the base model's output in the outer graph by looking
-    # at the input of the layer immediately following it.
-    gap_layer = model.get_layer("global_average_pooling2d")
-    
+    # Find the global average pooling layer dynamically
+    gap_layer = None
+    for layer in model.layers:
+        if "global_average_pooling2d" in layer.name.lower():
+            gap_layer = layer
+            break
+            
+    if gap_layer is None:
+        raise ValueError("Could not find global_average_pooling2d layer in the model architecture.")
+        
     grad_model = tf.keras.models.Model(
         [model.inputs], 
         [gap_layer.input, model.output]

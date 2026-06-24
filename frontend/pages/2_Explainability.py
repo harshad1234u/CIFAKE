@@ -21,6 +21,13 @@ if os.path.exists(css_path):
 st.title("🧠 Explainable AI (Grad-CAM)")
 st.markdown("Understand *why* the model made its prediction by visualizing the regions it focused on.")
 
+# Model Selection Sidebar
+model_option = st.sidebar.selectbox(
+    "Select Model for Explanation",
+    ["CIFAKE (MobileNetV2)", "StyleGAN (EfficientNetV2)"],
+    help="CIFAKE (MobileNetV2): Best for general objects & synthetic artwork.\nStyleGAN (EfficientNetV2): Best for photorealistic faces."
+)
+
 uploaded_file = st.file_uploader("Upload an image for explanation...", type=["jpg", "jpeg", "png", "webp"])
 
 if uploaded_file is not None:
@@ -36,7 +43,7 @@ if uploaded_file is not None:
         
         with st.spinner("Generating Grad-CAM heatmap..."):
             try:
-                model, target_size = get_model()
+                model, target_size = get_model(model_option)
                 original, heatmap, overlay = generate_gradcam(temp_path, model, target_size)
                 
                 col1, col2, col3 = st.columns(3)

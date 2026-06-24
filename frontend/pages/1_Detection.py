@@ -25,6 +25,13 @@ if 'history' not in st.session_state:
 st.title("🔍 Detection Engine")
 st.markdown("Upload an image to determine if it is **REAL** or **AI GENERATED**.")
 
+# Model Selection Sidebar
+model_option = st.sidebar.selectbox(
+    "Select Detection Model",
+    ["CIFAKE (MobileNetV2)", "StyleGAN (EfficientNetV2)"],
+    help="CIFAKE (MobileNetV2): Best for general objects & synthetic artwork.\nStyleGAN (EfficientNetV2): Best for photorealistic faces."
+)
+
 uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png", "webp"])
 
 if uploaded_file is not None:
@@ -46,7 +53,7 @@ if uploaded_file is not None:
         if predict_btn:
             with st.spinner("Analyzing image..."):
                 try:
-                    result = predict_image(image)
+                    result = predict_image(image, model_name=model_option)
                     
                     label = result['label']
                     confidence = result['confidence'] * 100
