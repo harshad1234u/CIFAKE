@@ -7,6 +7,12 @@ from PIL import Image
 project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 if project_root not in sys.path:
     sys.path.append(project_root)
+
+import importlib
+import model.predict
+import model.gradcam
+importlib.reload(model.predict)
+importlib.reload(model.gradcam)
 from model.gradcam import generate_gradcam
 from model.predict import get_model
 

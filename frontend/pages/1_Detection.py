@@ -8,6 +8,10 @@ from PIL import Image
 project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 if project_root not in sys.path:
     sys.path.append(project_root)
+
+import importlib
+import model.predict
+importlib.reload(model.predict)
 from model.predict import predict_image
 
 st.set_page_config(page_title="Detection | CIFAKE", page_icon="🔍", layout="wide")
