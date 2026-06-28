@@ -47,7 +47,7 @@ Both models are integrated with an **Explainable AI (XAI)** module using Gradien
 
 3. **Download Model Files:**
    Ensure both model files are placed in the appropriate directory:
-   * `model/cifake_model.keras` (CIFAKE model)
+   * `best_model.keras` or `model/best_model.keras` (CIFAKE model)
    * `stylegan_detector_best.keras` or `model/stylegan_detector_best.keras` (StyleGAN model)
 
 4. **Run the Application:**

@@ -14,11 +14,12 @@ def get_model(model_name="CIFAKE (MobileNetV2)"):
     global _models, _target_sizes
     
     if model_name not in _models:
-        # Determine the file path of the model
+        # Ensure absolute path resolution regardless of CWD
+        base_dir = os.path.dirname(os.path.abspath(__file__))
         if "StyleGAN" in model_name:
             # Check root directory or model directory
-            model_path_root = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'stylegan_detector_best.keras')
-            model_path_folder = os.path.join(os.path.dirname(__file__), 'stylegan_detector_best.keras')
+            model_path_root = os.path.join(os.path.dirname(base_dir), 'stylegan_detector_best.keras')
+            model_path_folder = os.path.join(base_dir, 'stylegan_detector_best.keras')
             
             if os.path.exists(model_path_root):
                 model_path = model_path_root
@@ -27,9 +28,11 @@ def get_model(model_name="CIFAKE (MobileNetV2)"):
             else:
                 raise FileNotFoundError(f"StyleGAN model file not found in root or model directory.")
         else:
-            model_path = os.path.join(os.path.dirname(__file__), 'cifake_model.keras')
+            model_path = os.path.join(os.path.dirname(base_dir), 'best_model.keras')
             if not os.path.exists(model_path):
-                raise FileNotFoundError("CIFAKE model file not found.")
+                model_path = os.path.join(base_dir, 'cifake_model.keras')
+                if not os.path.exists(model_path):
+                    raise FileNotFoundError("CIFAKE model file not found.")
             
         try:
             _models[model_name] = tf.keras.models.load_model(model_path)
